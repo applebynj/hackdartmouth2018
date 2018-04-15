@@ -55,13 +55,14 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 		for ( var i = 0; i < intersects.length; i++ ) {
 	
 			let intersectedObject = intersects[ i ].object;
-	
-			//TODO: animate object
-			intersectedObject.material.color.set( 0xff0000 );
-			
+				
 			//TODO abstract this out to a handler
 	
 			if(intersectedObject.userData.type === "theme") {
+
+				//TODO: animate object
+				intersectedObject.material.color.set( 0xFF7F50 );
+
 
 				if(lastTraveledObject !== undefined) {
 					lastTraveledObject.visible = true;
@@ -77,11 +78,14 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 					intersectedObject.position.y,
 					intersectedObject.position.z);
 
-					lastTraveledObject = intersectedObject;
-					lastTraveledObject.visible = false;
+				lastTraveledObject = intersectedObject;
+				lastTraveledObject.visible = false;
 			}
 	
 			if(intersectedObject.userData.type === "excerpt") {
+				//TODO: animate object
+				intersectedObject.material.color.set( 0x7F50FF );
+
 				this.enabled = false;
 				blocker.style.display = '-webkit-box';
 				blocker.style.display = '-moz-box';
@@ -93,6 +97,12 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 
 			if(intersectedObject.userData.type === "floor") {
 				yawObject.position.set(0,20,0);
+
+				//TODO: clean dupe code
+				if(lastTraveledObject !== undefined) {
+					lastTraveledObject.visible = true;
+					lastTraveledObject == undefined;
+				}
 			}
 		}
 	}

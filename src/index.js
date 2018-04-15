@@ -98,14 +98,14 @@ function init() {
     var radius, angleIncr;
 
     //TODO: abstract this out
-    radius = 100;  //TODO: generate based on num of theme
+    radius = 200;  //TODO: generate based on num of theme
     numThemes = PoemData.themes.length;
     slice = 2 * Math.PI / numThemes;
 
     for ( var i = 0; i < numThemes; i ++ ) {
         geometry = new THREE.TextGeometry( PoemData.themes[i].title, {
             font: font,
-            size: 10,
+            size: 20,
             height: 10,
             curveSegments: 12,
             bevelEnabled: false,
