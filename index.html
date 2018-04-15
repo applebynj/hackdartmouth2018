@@ -12,155 +12,209 @@
 			src:url("./fonts/Frauen.otf") format("opentype");
 		}
 
-			body {
-                margin: 0;
-                font-family: arial;
-                background-color: #ffffff;
-                overflow: hidden;
-            }
-			canvas { width: 100%; height: 100% }
+        body {
+            margin: 0;
+            font-family: arial;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+        canvas { width: 100%; height: 100% }
 
-	        #blocker {
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				background-color: #ffffff;
-			}
+        #blocker {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
 
-            .info {
-                width: 100%;
-				height: 100%;
-				display: -webkit-box;
-				display: -moz-box;
-				display: box;
-				-webkit-box-orient: horizontal;
-				-moz-box-orient: horizontal;
-				box-orient: horizontal;
-				-webkit-box-pack: center;
-				-moz-box-pack: center;
-				box-pack: center;
-				-webkit-box-align: center;
-				-moz-box-align: center;
-				box-align: center;
-				color: #ffffff;
-				text-align: center;
-				cursor: pointer;
-            }
+        .info {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
 
-						.home-header__container{
-							position: relative;
-							width: 80%;
-							margin-left: 10vw;
-							margin-top: 10vw;
-						}
+        .home-header__container{
+            background-color: #ffffff;
+            position: relative;
+            width: 80%;
+            padding: 15vw;
+        }
 
-						.home-header__text {
-							position: absolute;
-							font: 200 120px "Frauen", sans-serif;
-							color: #000000;
-							text-align: left;
-							line-height: 110px;
-						}
+        .home-header__text {
+            position: absolute;
+            font: 200 120px "Frauen", sans-serif;
+            color: #000000;
+            text-align: left;
+            line-height: 110px;
+        }
 
-						.home__paragraph-container {
-							margin-left: 55vw;
-							margin-top: -35vw;
-							width: 300px;
-							margin-bottom: 0vw;
-						}
+        .home__title {
+            font: 200 50px "Frauen", sans-serif;
+            color: #000000;
+            line-height: 60px;
+        }
 
-						.home__quote {
-							margin-left: 55vw;
-							margin-top: 40px;
-							width: 300px;
-							margin-bottom: 0px;
-						}
+        .home__paragraph-container {
+            margin-left: 55vw;
+            margin-top: -35vw;
+            width: 300px;
+            margin-bottom: 0vw;
+        }
 
-						.home__quote-attribution {
-							font: 200 20px "Frauen", sans-serif;
-							color: #000000;
-							text-align: left;
-							margin-bottom: 20px;
-						}
+        .home__quote {
+            margin-left: 55vw;
+            margin-top: 40px;
+            width: 300px;
+            margin-bottom: 0px;
+        }
 
-						.home__button {
-							font: 200 20px "Frauen", sans-serif;
-							color: #000000;
-							text-align: left;
-							margin-bottom: 50px;
-							text-align: center;
-							width: 110px;
-							margin: auto;
-							border:1px solid #000000;
-	 						outline-color:#FFFFFF;
-	 						outline-style:outset;
-						}
+        .home__quote-attribution {
+            font: 200 20px "Frauen", sans-serif;
+            color: #000000;
+            text-align: left;
+            margin-bottom: 20px;
+        }
 
-						.home__button :hover {
-							background-color: #000000;
-							color: #FFFFFF;
-						}
+        .home__button {
+            font: 200 20px "Frauen", sans-serif;
+            color: #000000;
+            text-align: left;
+            margin-bottom: 50px;
+            text-align: center;
+            width: 110px;
+            margin: auto;
+            border:1px solid #000000;
+            outline-color:#FFFFFF;
+            outline-style:outset;
+        }
 
-						.home__paragraph {
-							font-family: 'EB Garamond', serif;
-							font-style: normal;
-							font-weight: 400;
-							font-size: 18px;
-							line-height: 28px;
-						}
+        .home__button :hover {
+            background-color: #000000;
+            color: #FFFFFF;
+        }
 
-						.illustration {
-							display: inline;
-							margin-left: 10vw;
-							margin-top: 10vw;
-						}
+        .home__paragraph {
+            font-family: 'EB Garamond', serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 28px;
+        }
+
+        .illustration {
+            display: inline;
+            margin-left: 10vw;
+            margin-top: 10vw;
+        }
 
 
-            #poem {
+        #poem {
+            color: #000000;
+            display: -webkit-box;
+            display: -moz-box;
+            display: box;
+            -webkit-box-orient: vertical;
+            -moz-box-orient: vertical;
+            box-orient: vertical;
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            box-pack: center;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            box-align: center;
+            text-align: center;
+        }
 
-			}
+        .poem__container{
+            background-color: #ffffff;
+            position: relative;
+            width: 50%;
+            height: 80vh;
+            overflow:scroll;
+            padding: 0px 100px;
+            margin: auto;
+            margin-top: 10vh;
+        }
 
-            #crosshair {
-                width: 25px;
-                height: 25px;
-                background-color:aqua;
-                margin: 50vh 50vw;
-                display: none;
-                position: absolute;
-            }
+        #crosshair {
+            width: 25px;
+            height: 25px;
+            background-color:aqua;
+            margin: 50vh 50vw;
+            display: none;
+            position: absolute;
+        }
 
+        #poem .home__button {
+            margin: 50px 0px;
+        }
 
+        #poem .home__paragraph {
+            white-space: pre-wrap;
+            text-align:left;
+        }
 		</style>
 	</head>
 	<body>
         <div id="blocker">
-            <div id="instructions" class="home-header__container">
-                  <div class="home-header__text">The Poetics <br>of Space
-                  </div>
-									<img class="illustration" src="./src/static/placeholder-illustration.jpg">
-              <div class="home__paragraph-container">
-                  <div class="home__paragraph">
-                    We believe poetry is a powerful tool to understand raw human emotion. Too often, its barrier to entry discourages individuals from interacting with the medium. Our goal was to create a spatial environment to explore the thematic connections of the genre.
-                  </div>
-              </div>
-              <div class="home__quote">
-                  <div class="home__button">
-                    Begin
-                  </div>
-                  <br><br>
-                  <div class="home__paragraph">
-                    <i>It does not need that a poem should be long. Every word was once a poem. Every new relationship is a new word.</i>
-                  </div>
-                  <div class="home__quote-attribution">
-                    Ralph Waldo Emerson
-                  </div>
-              </div>
-            </div>
-            <div id="poem" class="info">
-                    <span style="font-size:40px">Poem Title</span>
-                    <br />
-                    This is a poem and it is wonderful and I enjoy reading it becuase it's a poem.
-            </div>
+                <div id="instructions" class="home-header__container info">
+                        <div class="home-header__text">The Poetics <br>of Space
+                        </div>
+                    <img class="illustration" src="./src/static/placeholder-illustration.jpg">
+                    <div class="home__paragraph-container">
+                        <div class="home__paragraph">
+                            We believe poetry is a powerful tool to understand raw human emotion. Too often, its barrier to entry discourages individuals from interacting with the medium. Our goal was to create a spatial environment to explore the thematic connections of the genre.
+                        </div>
+                    </div>
+                    <div class="home__quote">
+                        <div class="home__button">
+                            Begin
+                        </div>
+                        <br><br>
+                        <div class="home__paragraph">
+                            <i>It does not need that a poem should be long. Every word was once a poem. Every new relationship is a new word.</i>
+                        </div>
+                        <div class="home__quote-attribution">
+                            Ralph Waldo Emerson
+                        </div>
+                    </div>
+                </div>
+        
+                <div id="poem" class="poem__container info">
+                    <h1 class="home__title">Remember</h1>
+                    <h4 class="home__quote-attribution">Joy Harjo, 1951</h4>
+                    <p class="home__paragraph">
+                    Remember the sky that you were born under,
+                    know each of the star’s stories.
+                    Remember the moon, know who she is.
+                    Remember the sun’s birth at dawn, that is the
+                    strongest point of time. Remember sundown
+                    and the giving away to night.
+                    Remember your birth, how your mother struggled
+                    to give you form and breath. You are evidence of
+                    her life, and her mother’s, and hers.
+                    Remember your father. He is your life, also.
+                    Remember the earth whose skin you are:
+                    red earth, black earth, yellow earth, white earth
+                    brown earth, we are earth.
+                    Remember the plants, trees, animal life who all have their
+                    tribes, their families, their histories, too. Talk to them,
+                    listen to them. They are alive poems.
+                    Remember the wind. Remember her voice. She knows the
+                    origin of this universe.
+                    Remember you are all people and all people
+                    are you.
+                    Remember you are this universe and this
+                    universe is you.
+                    Remember all is in motion, is growing, is you.
+                    Remember language comes from this.
+                    Remember the dance language is, that life is.
+                    Remember.
+                    </p>
+                    <div class="home__button">
+                            close
+                    </div>
+                </div>
         </div>
         <div id="crosshair"></div>
         <script src="dist/bundle.js"></script>
