@@ -1,11 +1,17 @@
 var THREE = require('three');
+var poem = document.getElementById( 'poem' );
+var crosshair = document.getElementById( 'crosshair' );
 
-var PointerLockControls = function ( camera, mouse, raycaster) {
+//TODO: clean this and refactor to not have to pass in entire scene, again its 4am 
+//TODO: and remove passing font
+var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 
 	var scope = this;
 
 	var pitchObject = new THREE.Object3D();
 	pitchObject.add( camera );
+
+	var lastTraveledObject;
 
 	var yawObject = new THREE.Object3D();
 	yawObject.position.y = 10;
@@ -42,6 +48,63 @@ var PointerLockControls = function ( camera, mouse, raycaster) {
 		// update the picking ray with the camera and mouse position
 		let centerScreen = new THREE.Vector2( 0, 0 );
 		raycaster.setFromCamera( centerScreen, camera, raycaster );
+
+		// calculate objects intersecting the picking ray
+		var intersects = raycaster.intersectObjects( scene.children );
+    
+		for ( var i = 0; i < intersects.length; i++ ) {
+	
+			let intersectedObject = intersects[ i ].object;
+				
+			//TODO abstract this out to a handler
+	
+			if(intersectedObject.userData.type === "theme") {
+
+				//TODO: animate object
+				intersectedObject.material.color.set( 0xFF7F50 );
+
+
+				if(lastTraveledObject !== undefined) {
+					lastTraveledObject.visible = true;
+					lastTraveledObject == undefined;
+				}
+
+				if(!intersectedObject.userData.toggled) {
+					intersectedObject.userData.toggled = true;
+					displayExcerpts(intersectedObject);
+				}                
+	
+				yawObject.position.set(intersectedObject.position.x,
+					intersectedObject.position.y,
+					intersectedObject.position.z);
+
+				lastTraveledObject = intersectedObject;
+				lastTraveledObject.visible = false;
+			}
+	
+			if(intersectedObject.userData.type === "excerpt") {
+				//TODO: animate object
+				intersectedObject.material.color.set( 0x7F50FF );
+
+				this.enabled = false;
+				blocker.style.display = '-webkit-box';
+				blocker.style.display = '-moz-box';
+				blocker.style.display = 'box';
+				crosshair.style.display = 'none';
+				poem.style.display = '';
+				document.exitPointerLock();
+			}
+
+			if(intersectedObject.userData.type === "floor") {
+				yawObject.position.set(0,20,0);
+
+				//TODO: clean dupe code
+				if(lastTraveledObject !== undefined) {
+					lastTraveledObject.visible = true;
+					lastTraveledObject == undefined;
+				}
+			}
+		}
 	}
 	
 	document.addEventListener( 'mousemove', onMouseMove, false );
@@ -88,7 +151,50 @@ var PointerLockControls = function ( camera, mouse, raycaster) {
 
 	};
 
+	//TODO: Refactor all below here back out of this file ---------------------
+
+	var displayExcerpts = function(themeObject) {
+		var numLines = themeObject.userData.lines.length;
+
+		radius = 20; //TODO: generate based on num of lines
+		slice = 2 * Math.PI / numLines;
+
+		for ( i = 0; i < numLines; i++ ) {
+			var geometry;
+
+				geometry = new THREE.TextGeometry( themeObject.userData.lines[i].line, {
+					font: font,
+					size: 2,
+					height: 1,
+					curveSegments: 12,
+					bevelEnabled: false,
+					//bevelThickness: 10,
+					//bevelSize: 8,
+					//bevelSegments: 5
+				} );
+
+
+				material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
+				var mesh = new THREE.Mesh( geometry, material );
+				mesh.userData.type = 'excerpt';
+
+				mesh.position.x = radius * Math.cos(slice*i);
+				mesh.position.y = 25 - (Math.random() * 50);
+				mesh.position.z = radius * Math.sin(slice*i);
+
+				mesh.position.x += themeObject.position.x;
+				mesh.position.y += themeObject.position.y;
+				mesh.position.z += themeObject.position.z;
+
+				mesh.lookAt(themeObject.position);
+
+				scene.add( mesh );
+    };    
+}
+
 };
+
+
 
 // browserify support
 if ( typeof module === 'object' ) {
