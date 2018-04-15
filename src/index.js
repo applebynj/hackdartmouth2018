@@ -8,6 +8,7 @@ var geometry, material, mesh;
 var controls,time = Date.now();
 var objects = [];
 var ray;
+var crosshair = document.getElementById( 'crosshair' );
 var blocker = document.getElementById( 'blocker' );
 var instructions = document.getElementById( 'instructions' );
 
@@ -23,11 +24,15 @@ if ( havePointerLock ) {
         if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
             controls.enabled = true;
             blocker.style.display = 'none';
+            crosshair.style.display = 'block';
+            crosshair.style.display = '-webkit-block';
+            crosshair.style.display = '-moz-block';
         } else {
             controls.enabled = false;
             blocker.style.display = '-webkit-box';
             blocker.style.display = '-moz-box';
             blocker.style.display = 'box';
+            crosshair.style.display = 'none';
             instructions.style.display = '';
         }
     }
