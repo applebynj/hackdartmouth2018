@@ -10,6 +10,11 @@ var objects = [];
 var ray;
 var blocker = document.getElementById( 'blocker' );
 var instructions = document.getElementById( 'instructions' );
+
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
+
+
 // http://www.html5rocks.com/en/tutorials/pointerlock/intro/
 var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 if ( havePointerLock ) {
@@ -120,6 +125,8 @@ function init() {
         mesh.position.z = radius * Math.sin(slice*i);
         scene.add( mesh );
         // material.color.setHSV( Math.random() * 0.2 + 0.5, Math.random() * 0.5, 1 );
+
+        mesh.userData.type = 'theme'; //TODO: replace with enum / class and such
         objects.push( mesh );
     }
 
@@ -131,12 +138,11 @@ function init() {
     var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
     light.position.set( -1, - 0.5, -1 );
     scene.add( light );
-
     
-    controls = new PointerLockControls( camera );
+    controls = new PointerLockControls( camera, mouse );
     scene.add( controls.getObject() );
-    // ray = new THREE.Ray();
-    // ray.direction.set( 0, -1, 0 );
+    ray = new THREE.Ray();
+    ray.direction.set( 0, -1, 0 );
 
     
     //
@@ -144,8 +150,8 @@ function init() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
-    //
 
+    //
     window.addEventListener( 'resize', onWindowResize, false );
 };
 function onWindowResize() {
@@ -156,10 +162,31 @@ function onWindowResize() {
 function animate() {
     requestAnimationFrame( animate );
 
-    // cube.rotation.x += 0.1;
-    // cube.rotation.y += 0.1;
-    // ray.origin.copy( controls.getObject().position );
-    // ray.origin.y -= 10;
+    ray.origin.copy( controls.getObject().position );
+    ray.origin.y -= 10;
+
+    // update the picking ray with the camera and mouse position
+    let centerScreen = new THREE.Vector2(0, 0);
+	raycaster.setFromCamera(centerScreen, camera );
+
+	// calculate objects intersecting the picking ray
+	var intersects = raycaster.intersectObjects( scene.children );
+
+	for ( var i = 0; i < intersects.length; i++ ) {
+
+        let intersectedObject = intersects[ i ].object;
+
+        //TODO: animate object
+        intersectedObject.material.color.set( 0xff0000 );
+        
+        //TODO: if intersects a theme and then click, jump inside it
+        if(intersectedObject.userData.type === "theme") {
+            controls.getObject().position.set(intersectedObject.position.x,
+                intersectedObject.position.y,
+                intersectedObject.position.z);
+        }
+    }
+        
     controls.update( Date.now() - time );
     renderer.render( scene, camera );
     time = Date.now();

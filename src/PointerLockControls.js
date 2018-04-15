@@ -1,6 +1,6 @@
 var THREE = require('three');
 
-var PointerLockControls = function ( camera ) {
+var PointerLockControls = function ( camera, mouse ) {
 
 	var scope = this;
 
@@ -30,9 +30,17 @@ var PointerLockControls = function ( camera ) {
 
 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
 
+		// mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+		// mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 	};
 
+	var onDocumentMouseDown = function ( event ) {
+		
+		//TODO: click to move into shape
+	}
+	
 	document.addEventListener( 'mousemove', onMouseMove, false );
+	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 
 	this.enabled = false;
 
