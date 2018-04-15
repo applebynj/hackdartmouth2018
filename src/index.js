@@ -106,7 +106,7 @@ function init() {
         geometry = new THREE.TextGeometry( PoemData.themes[i].title, {
             font: font,
             size: 20,
-            height: 10,
+            height: 1,
             curveSegments: 12,
             bevelEnabled: false,
             //bevelThickness: 10,
