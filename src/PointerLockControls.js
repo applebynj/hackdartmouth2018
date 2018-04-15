@@ -1,10 +1,10 @@
 var THREE = require('three');
 var poem = document.getElementById( 'poem' );
 var crosshair = document.getElementById( 'crosshair' );
-var font;
 
-//TODO: clean this and refactor to not have to pass in entire scene, again its 4am
-var PointerLockControls = function ( camera, mouse, raycaster, scene ) {
+//TODO: clean this and refactor to not have to pass in entire scene, again its 4am 
+//TODO: and remove passing font
+var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 
 	var scope = this;
 
@@ -137,7 +137,7 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene ) {
 		for ( i = 0; i < numLines; i++ ) {
 			var geometry;
 
-				geometry = new THREE.TextGeometry( themeObject.userData.lines[i], {
+				geometry = new THREE.TextGeometry( themeObject.userData.lines[i].line, {
 					font: font,
 					size: 2,
 					height: 1,
@@ -170,14 +170,6 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene ) {
 };
 
 
-
-var loader = new THREE.FontLoader();
-
-//TODO: add loading screen
-//Render text ahead and then just show?
-loader.load( 'fonts/helvetiker_regular.typeface.json', function ( newfont ) {
-    font = newfont;
-});
 
 // browserify support
 if ( typeof module === 'object' ) {
