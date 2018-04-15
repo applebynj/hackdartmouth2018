@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i" rel="stylesheet">
 		<meta charset=utf-8>
 		<title>My first three.js app</title>
 		<style>
@@ -53,10 +54,37 @@
 						}
 
 						.home-header__text {
-							font: 200 120px "Frauen", Helvetica;
+							font: 200 120px "Frauen", sans-serif;
 							color: #000000;
 							text-align: left;
 							line-height: 110px;
+						}
+
+						.home__paragraph-container {
+							margin-left: 55vw;
+							margin-top: -70px;
+							width: 300px;
+						}
+
+						.home__quote {
+							margin-left: 55vw;
+							margin-top: 40px;
+							width: 300px;
+							margin-bottom: 0px;
+						}
+
+						.home__quote-attribution {
+							font: 200 20px "Frauen", sans-serif;
+							color: #000000;
+							text-align: left;
+						}
+
+						.home__paragraph {
+							font-family: 'EB Garamond', serif;
+							font-style: normal;
+							font-weight: 400;
+							font-size: 18px;
+							line-height: 28px;
 						}
 
             #instructions {
@@ -84,6 +112,21 @@
             <div id="instructions" class="home-header__container">
                   <div class="home-header__text">The Poetics <br>of Space</div>
             </div>
+						<div class="home__paragraph-container">
+							<div class="home__paragraph">
+								We believe poetry is a powerful tool to understand raw human emotion. Too often, its barrier to entry discourages individuals from interacting with the medium. Our goal was to create a spatial environment to explore the thematic connections of the genre.
+							</div>
+						</div>
+						<div class="home__quote">
+							<div class="home__paragraph">
+								<i>It does not need that a poem should be long. Every word was once a poem. Every new relationship is a new word.</i>
+							</div>
+							<div class="home__quote-attribution">
+								Ralph Waldo Emerson
+							</div>
+						</div>
+
+						</div>
         </div>
         <div id="crosshair"></div>
         <div id="poem" class="info">
