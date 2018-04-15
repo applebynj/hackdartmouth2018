@@ -4,7 +4,14 @@
 		<meta charset=utf-8>
 		<title>My first three.js app</title>
 		<style>
-			body { 
+
+		/* Font for intro page */
+		@font-face {
+			font-family: 'Frauen';
+			src:url("./fonts/Frauen.otf") format("opentype");
+		}
+
+			body {
                 margin: 0;
                 font-family: arial;
                 background-color: #ffffff;
@@ -16,7 +23,7 @@
 				position: absolute;
 				width: 100%;
 				height: 100%;
-				background-color: rgba(0,0,0,0.5);
+				background-color: #ffffff;
 			}
 
             .info {
@@ -39,12 +46,25 @@
 				cursor: pointer;
             }
 
+						.home-header__container{
+							width: 80%;
+							margin-left: 10vw;
+							margin-top: 10vw;
+						}
+
+						.home-header__text {
+							font: 200 120px "Frauen", Helvetica;
+							color: #000000;
+							text-align: left;
+							line-height: 110px;
+						}
+
             #instructions {
-				
+
 			}
 
             #poem {
-		
+
 			}
 
             #crosshair {
@@ -56,14 +76,13 @@
                 position: absolute;
             }
 
+
 		</style>
 	</head>
 	<body>
         <div id="blocker">
-            <div id="instructions" class="info">
-                    <span style="font-size:40px">Welcome! Instructions here</span>
-                    <br />
-                    More Details here and stuff you should KNOW!
+            <div id="instructions" class="home-header__container">
+                  <div class="home-header__text">The Poetics <br>of Space</div>
             </div>
         </div>
         <div id="crosshair"></div>
