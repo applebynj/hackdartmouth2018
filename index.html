@@ -48,12 +48,14 @@
             }
 
 						.home-header__container{
+							position: relative;
 							width: 80%;
 							margin-left: 10vw;
 							margin-top: 10vw;
 						}
 
 						.home-header__text {
+							position: absolute;
 							font: 200 120px "Frauen", sans-serif;
 							color: #000000;
 							text-align: left;
@@ -62,9 +64,9 @@
 
 						.home__paragraph-container {
 							margin-left: 55vw;
-							margin-top: -90px;
-							padding-bottom: 30px;
+							margin-top: -35vw;
 							width: 300px;
+							margin-bottom: 0vw;
 						}
 
 						.home__quote {
@@ -78,6 +80,7 @@
 							font: 200 20px "Frauen", sans-serif;
 							color: #000000;
 							text-align: left;
+							margin-bottom: 20px;
 						}
 
 						.home__paragraph {
@@ -88,9 +91,12 @@
 							line-height: 28px;
 						}
 
-            #instructions {
+						.illustration {
+							display: inline;
+							margin-left: 10vw;
+							margin-top: 10vw;
+						}
 
-			}
 
             #poem {
 
@@ -112,6 +118,7 @@
         <div id="blocker">
             <div id="instructions" class="home-header__container">
                   <div class="home-header__text">The Poetics <br>of Space</div>
+									<img class="illustration" src="./src/static/placeholder-illustration.jpg">
             </div>
 						<div class="home__paragraph-container">
 							<div class="home__paragraph">
@@ -119,6 +126,9 @@
 							</div>
 						</div>
 						<div class="home__quote">
+							<div class="home__quote-attribution">
+								Begin
+							</div>
 							<div class="home__paragraph">
 								<i>It does not need that a poem should be long. Every word was once a poem. Every new relationship is a new word.</i>
 							</div>
