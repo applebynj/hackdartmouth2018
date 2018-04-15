@@ -1,6 +1,10 @@
 var THREE = require('three');
+var poem = document.getElementById( 'poem' );
+var crosshair = document.getElementById( 'crosshair' );
+var font;
 
-var PointerLockControls = function ( camera, mouse, raycaster) {
+//TODO: clean this and refactor to not have to pass in entire scene, again its 4am
+var PointerLockControls = function ( camera, mouse, raycaster, scene ) {
 
 	var scope = this;
 
@@ -42,6 +46,40 @@ var PointerLockControls = function ( camera, mouse, raycaster) {
 		// update the picking ray with the camera and mouse position
 		let centerScreen = new THREE.Vector2( 0, 0 );
 		raycaster.setFromCamera( centerScreen, camera, raycaster );
+
+		// calculate objects intersecting the picking ray
+		var intersects = raycaster.intersectObjects( scene.children );
+    
+		for ( var i = 0; i < intersects.length; i++ ) {
+	
+			let intersectedObject = intersects[ i ].object;
+	
+			//TODO: animate object
+			intersectedObject.material.color.set( 0xff0000 );
+			
+			//TODO abstract this out to a handler
+	
+			if(intersectedObject.userData.type === "theme") {
+				if(!intersectedObject.userData.toggled) {
+					intersectedObject.userData.toggled = true;
+					displayExcerpts(intersectedObject);
+				}                
+	
+				yawObject.position.set(intersectedObject.position.x,
+					intersectedObject.position.y,
+					intersectedObject.position.z);
+			}
+	
+			if(intersectedObject.userData.type === "excerpt") {
+				this.enabled = false;
+				blocker.style.display = '-webkit-box';
+				blocker.style.display = '-moz-box';
+				blocker.style.display = 'box';
+				crosshair.style.display = 'none';
+				poem.style.display = '';
+				document.exitPointerLock();
+			}
+		}
 	}
 	
 	document.addEventListener( 'mousemove', onMouseMove, false );
@@ -88,7 +126,58 @@ var PointerLockControls = function ( camera, mouse, raycaster) {
 
 	};
 
+	//TODO: Refactor all below here back out of this file ---------------------
+
+	var displayExcerpts = function(themeObject) {
+		var numLines = themeObject.userData.lines.length;
+
+		radius = 20; //TODO: generate based on num of lines
+		slice = 2 * Math.PI / numLines;
+
+		for ( i = 0; i < numLines; i++ ) {
+			var geometry;
+
+				geometry = new THREE.TextGeometry( themeObject.userData.lines[i], {
+					font: font,
+					size: 2,
+					height: 1,
+					curveSegments: 12,
+					bevelEnabled: false,
+					//bevelThickness: 10,
+					//bevelSize: 8,
+					//bevelSegments: 5
+				} );
+
+
+				material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
+				var mesh = new THREE.Mesh( geometry, material );
+				mesh.userData.type = 'excerpt';
+
+				mesh.position.x = radius * Math.cos(slice*i);
+				mesh.position.y = 25 - (Math.random() * 50);
+				mesh.position.z = radius * Math.sin(slice*i);
+
+				mesh.position.x += themeObject.position.x;
+				mesh.position.y += themeObject.position.y;
+				mesh.position.z += themeObject.position.z;
+
+				mesh.lookAt(themeObject.position);
+
+				scene.add( mesh );
+    };    
+}
+
 };
+
+
+
+var loader = new THREE.FontLoader();
+
+//TODO: add loading screen
+//Render text ahead and then just show?
+loader.load( 'fonts/helvetiker_regular.typeface.json', function ( newfont ) {
+    font = newfont;
+});
 
 // browserify support
 if ( typeof module === 'object' ) {
