@@ -19,8 +19,8 @@
 				background-color: rgba(0,0,0,0.5);
 			}
 
-            #instructions {
-				width: 100%;
+            .info {
+                width: 100%;
 				height: 100%;
 				display: -webkit-box;
 				display: -moz-box;
@@ -37,6 +37,14 @@
 				color: #ffffff;
 				text-align: center;
 				cursor: pointer;
+            }
+
+            #instructions {
+				
+			}
+
+            #poem {
+		
 			}
 
             #crosshair {
@@ -52,13 +60,18 @@
 	</head>
 	<body>
         <div id="blocker">
-            <div id="instructions">
+            <div id="instructions" class="info">
                     <span style="font-size:40px">Welcome! Instructions here</span>
                     <br />
                     More Details here and stuff you should KNOW!
             </div>
         </div>
         <div id="crosshair"></div>
+        <div id="poem" class="info">
+                <span style="font-size:40px">Poem Title</span>
+                <br />
+                This is a poem and it is wonderful and I enjoy reading it becuase it's a poem.
+        </div>
         <script src="dist/bundle.js"></script>
 	</body>
 </html>
