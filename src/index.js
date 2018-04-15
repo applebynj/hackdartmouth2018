@@ -21,7 +21,7 @@ var loader = new THREE.FontLoader();
 
 //TODO: add loading screen
 //Render text ahead and then just show?
-loader.load( 'fonts/helvetiker_regular.typeface.json', function ( newfont ) {
+loader.load( 'fonts/EB-Garamond.json', function ( newfont ) {
     font = newfont;
     init();
     animate();
