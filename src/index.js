@@ -105,12 +105,19 @@ function init() {
         // face.vertexColors[ 3 ] = new THREE.Color().setHSV( Math.random() * 0.2 + 0.5, Math.random() * 0.5, 1 );
     }
     
-    for ( var i = 0; i < 10; i ++ ) {
+    var numThemes, radius, angleIncr;
+
+    radius = 100;
+    numThemes = 5; //TODO: get from JSON
+    slice = 2 * Math.PI / numThemes;
+
+    for ( var i = 0; i < numThemes; i ++ ) {
         material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
         var mesh = new THREE.Mesh( geometry, material );
-        mesh.position.x = Math.floor( Math.random() * 200) - 100;
-        mesh.position.y = 50//Math.floor( Math.random() * 10 ) * 10 + 50;
-        mesh.position.z = Math.floor( Math.random() * 100) - 100;
+
+        mesh.position.x = radius * Math.cos(slice*i);
+        mesh.position.y = 50;
+        mesh.position.z = radius * Math.sin(slice*i);
         scene.add( mesh );
         // material.color.setHSV( Math.random() * 0.2 + 0.5, Math.random() * 0.5, 1 );
         objects.push( mesh );
