@@ -61,7 +61,7 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 			if(intersectedObject.userData.type === "theme") {
 
 				//TODO: animate object
-				intersectedObject.material.color.set( 0xFF7F50 );
+				//intersectedObject.material.color.set( 0xFF7F50 );
 
 
 				if(lastTraveledObject !== undefined) {
@@ -84,7 +84,7 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 	
 			if(intersectedObject.userData.type === "excerpt") {
 				//TODO: animate object
-				intersectedObject.material.color.set( 0x7F50FF );
+				//intersectedObject.material.color.set( 0x7F50FF );
 
 				this.enabled = false;
 				blocker.style.display = '-webkit-box';
@@ -160,36 +160,97 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 		slice = 2 * Math.PI / numLines;
 
 		for ( i = 0; i < numLines; i++ ) {
-			var geometry;
+			// var geometry;
 
-				geometry = new THREE.TextGeometry( themeObject.userData.lines[i].line, {
-					font: font,
-					size: 2,
-					height: 1,
-					curveSegments: 12,
-					bevelEnabled: false,
-					//bevelThickness: 10,
-					//bevelSize: 8,
-					//bevelSegments: 5
-				} );
+			// 	geometry = new THREE.TextGeometry( themeObject.userData.lines[i].line, {
+			// 		font: font,
+			// 		size: 2,
+			// 		height: 1,
+			// 		curveSegments: 12,
+			// 		bevelEnabled: false,
+			// 		//bevelThickness: 10,
+			// 		//bevelSize: 8,
+			// 		//bevelSegments: 5
+			// 	} );
 
 
-				material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
-				var mesh = new THREE.Mesh( geometry, material );
-				mesh.userData.type = 'excerpt';
+			// 	material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
+			// 	var mesh = new THREE.Mesh( geometry, material );
+			// 	mesh.userData.type = 'excerpt';
 
-				mesh.position.x = radius * Math.cos(slice*i);
-				mesh.position.y = 25 - (Math.random() * 50);
-				mesh.position.z = radius * Math.sin(slice*i);
+			// 	mesh.position.x = radius * Math.cos(slice*i);
+			// 	mesh.position.y = 25 - (Math.random() * 50);
+			// 	mesh.position.z = radius * Math.sin(slice*i);
 
-				mesh.position.x += themeObject.position.x;
-				mesh.position.y += themeObject.position.y;
-				mesh.position.z += themeObject.position.z;
+			// 	mesh.position.x += themeObject.position.x;
+			// 	mesh.position.y += themeObject.position.y;
+			// 	mesh.position.z += themeObject.position.z;
 
-				mesh.lookAt(themeObject.position);
+			// 	mesh.lookAt(themeObject.position);
 
-				scene.add( mesh );
+			// 	scene.add( mesh );
+
+				var fontface = "Garamond";
+				var fontsize = 30;
+				var borderThickness =  0;
+				var borderColor = { r:0, g:0, b:0, a:1.0 };
+				var backgroundColor =  { r:255, g:255, b:255, a:1.0 };
+				var textColor =  { r:0, g:0, b:0, a:1.0 };
+		
+				var canvas = document.createElement('canvas');
+				var context = canvas.getContext('2d');
+				context.font = "Normal " + fontsize + "px " + fontface;
+				var metrics = context.measureText( themeObject.userData.lines[i].line );
+				var textWidth = metrics.width + 1000;
+				// canvas.width = (textWidth + borderThickness) * 1.1;
+		
+				context.fillStyle   = "rgba(" + backgroundColor.r + "," + backgroundColor.g + "," + backgroundColor.b + "," + backgroundColor.a + ")";
+				context.strokeStyle = "rgba(" + borderColor.r + "," + borderColor.g + "," + borderColor.b + "," + borderColor.a + ")";
+		
+				context.lineWidth = borderThickness;
+				roundRect(context, borderThickness/2, borderThickness/2, (textWidth + borderThickness) * 1.1, fontsize * 1.4 + borderThickness, 0);
+				
+				context.fillStyle = "rgba("+textColor.r+", "+textColor.g+", "+textColor.b+", 1.0)";
+				context.fillText( themeObject.userData.lines[i].line, borderThickness, fontsize + borderThickness);
+		
+				var texture = new THREE.Texture(canvas) 
+				texture.needsUpdate = true;
+		
+				var spriteMaterial = new THREE.SpriteMaterial( { map: texture } );
+				var sprite = new THREE.Sprite( spriteMaterial );
+				sprite.scale.set(0.5 * fontsize, 0.25 * fontsize, 0.75 * fontsize);
+				
+				sprite.position.x = radius * Math.cos(slice*i);
+				sprite.position.y = 10 - (Math.random() * 20);
+				sprite.position.z = radius * Math.sin(slice*i);
+
+				sprite.position.x += themeObject.position.x;
+				sprite.position.y += themeObject.position.y;
+				sprite.position.z += themeObject.position.z;
+
+				sprite.userData.type = 'excerpt';
+
+
+				scene.add( sprite );
     };    
+};
+
+// function for drawing rounded rectangles
+var roundRect = function (ctx, x, y, w, h, r) 
+{
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.lineTo(x+w-r, y);
+    ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+    ctx.lineTo(x+w, y+h-r);
+    ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+    ctx.lineTo(x+r, y+h);
+    ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+    ctx.lineTo(x, y+r);
+    ctx.quadraticCurveTo(x, y, x+r, y);
+    ctx.closePath();
+    ctx.fill();
+	ctx.stroke();   
 }
 
 };
