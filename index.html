@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i" rel="stylesheet">
 		<meta charset=utf-8>
 		<title>My first three.js app</title>
 		<style>
-			body { 
+
+		/* Font for intro page */
+		@font-face {
+			font-family: 'Frauen';
+			src:url("./fonts/Frauen.otf") format("opentype");
+		}
+
+			body {
                 margin: 0;
                 font-family: arial;
                 background-color: #ffffff;
@@ -16,7 +24,7 @@
 				position: absolute;
 				width: 100%;
 				height: 100%;
-				background-color: rgba(0,0,0,0.5);
+				background-color: #ffffff;
 			}
 
             .info {
@@ -39,12 +47,77 @@
 				cursor: pointer;
             }
 
-            #instructions {
-				
-			}
+						.home-header__container{
+							position: relative;
+							width: 80%;
+							margin-left: 10vw;
+							margin-top: 10vw;
+						}
+
+						.home-header__text {
+							position: absolute;
+							font: 200 120px "Frauen", sans-serif;
+							color: #000000;
+							text-align: left;
+							line-height: 110px;
+						}
+
+						.home__paragraph-container {
+							margin-left: 55vw;
+							margin-top: -35vw;
+							width: 300px;
+							margin-bottom: 0vw;
+						}
+
+						.home__quote {
+							margin-left: 55vw;
+							margin-top: 40px;
+							width: 300px;
+							margin-bottom: 0px;
+						}
+
+						.home__quote-attribution {
+							font: 200 20px "Frauen", sans-serif;
+							color: #000000;
+							text-align: left;
+							margin-bottom: 20px;
+						}
+
+						.home__button {
+							font: 200 20px "Frauen", sans-serif;
+							color: #000000;
+							text-align: left;
+							margin-bottom: 50px;
+							text-align: center;
+							width: 110px;
+							margin: auto;
+							border:1px solid #000000;
+	 						outline-color:#FFFFFF;
+	 						outline-style:outset;
+						}
+
+						.home__button :hover {
+							background-color: #000000;
+							color: #FFFFFF;
+						}
+
+						.home__paragraph {
+							font-family: 'EB Garamond', serif;
+							font-style: normal;
+							font-weight: 400;
+							font-size: 18px;
+							line-height: 28px;
+						}
+
+						.illustration {
+							display: inline;
+							margin-left: 10vw;
+							margin-top: 10vw;
+						}
+
 
             #poem {
-		
+
 			}
 
             #crosshair {
@@ -56,14 +129,32 @@
                 position: absolute;
             }
 
+
 		</style>
 	</head>
 	<body>
         <div id="blocker">
-            <div id="instructions" class="info">
-                    <span style="font-size:40px">Welcome! Instructions here</span>
-                    <br />
-                    More Details here and stuff you should KNOW!
+            <div id="instructions" class="home-header__container">
+                  <div class="home-header__text">The Poetics <br>of Space
+                  </div>
+									<img class="illustration" src="./src/static/placeholder-illustration.jpg">
+              <div class="home__paragraph-container">
+                  <div class="home__paragraph">
+                    We believe poetry is a powerful tool to understand raw human emotion. Too often, its barrier to entry discourages individuals from interacting with the medium. Our goal was to create a spatial environment to explore the thematic connections of the genre.
+                  </div>
+              </div>
+              <div class="home__quote">
+                  <div class="home__button">
+                    Begin
+                  </div>
+                  <br><br>
+                  <div class="home__paragraph">
+                    <i>It does not need that a poem should be long. Every word was once a poem. Every new relationship is a new word.</i>
+                  </div>
+                  <div class="home__quote-attribution">
+                    Ralph Waldo Emerson
+                  </div>
+              </div>
             </div>
             <div id="poem" class="info">
                     <span style="font-size:40px">Poem Title</span>
