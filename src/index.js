@@ -11,8 +11,8 @@ var ray;
 var blocker = document.getElementById( 'blocker' );
 var instructions = document.getElementById( 'instructions' );
 
-var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
+var raycaster = new THREE.Raycaster();
 
 
 // http://www.html5rocks.com/en/tutorials/pointerlock/intro/
@@ -139,10 +139,11 @@ function init() {
     light.position.set( -1, - 0.5, -1 );
     scene.add( light );
     
-    controls = new PointerLockControls( camera, mouse );
-    scene.add( controls.getObject() );
     ray = new THREE.Ray();
     ray.direction.set( 0, -1, 0 );
+
+    controls = new PointerLockControls( camera, mouse, raycaster);
+    scene.add( controls.getObject() );
 
     
     //
@@ -162,30 +163,23 @@ function onWindowResize() {
 function animate() {
     requestAnimationFrame( animate );
 
-    ray.origin.copy( controls.getObject().position );
-    ray.origin.y -= 10;
+    // calculate objects intersecting the picking ray
+		var intersects = raycaster.intersectObjects( scene.children );
 
-    // update the picking ray with the camera and mouse position
-    let centerScreen = new THREE.Vector2(0, 0);
-	raycaster.setFromCamera(centerScreen, camera );
+		for ( var i = 0; i < intersects.length; i++ ) {
 
-	// calculate objects intersecting the picking ray
-	var intersects = raycaster.intersectObjects( scene.children );
+			let intersectedObject = intersects[ i ].object;
 
-	for ( var i = 0; i < intersects.length; i++ ) {
-
-        let intersectedObject = intersects[ i ].object;
-
-        //TODO: animate object
-        intersectedObject.material.color.set( 0xff0000 );
-        
-        //TODO: if intersects a theme and then click, jump inside it
-        if(intersectedObject.userData.type === "theme") {
-            controls.getObject().position.set(intersectedObject.position.x,
-                intersectedObject.position.y,
-                intersectedObject.position.z);
-        }
-    }
+			//TODO: animate object
+			intersectedObject.material.color.set( 0xff0000 );
+			
+			//TODO: if intersects a theme and then click, jump inside it
+			if(intersectedObject.userData.type === "theme") {
+				controls.getObject().position.set(intersectedObject.position.x,
+					intersectedObject.position.y,
+					intersectedObject.position.z);
+			}
+		}
         
     controls.update( Date.now() - time );
     renderer.render( scene, camera );

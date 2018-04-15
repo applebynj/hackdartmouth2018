@@ -1,6 +1,6 @@
 var THREE = require('three');
 
-var PointerLockControls = function ( camera, mouse ) {
+var PointerLockControls = function ( camera, mouse, raycaster) {
 
 	var scope = this;
 
@@ -36,7 +36,12 @@ var PointerLockControls = function ( camera, mouse ) {
 
 	var onDocumentMouseDown = function ( event ) {
 		
-		//TODO: click to move into shape
+		// ray.origin.copy( controls.getObject().position );
+		// ray.origin.y -= 10;
+
+		// update the picking ray with the camera and mouse position
+		let centerScreen = new THREE.Vector2( 0, 0 );
+		raycaster.setFromCamera( centerScreen, camera, raycaster );
 	}
 	
 	document.addEventListener( 'mousemove', onMouseMove, false );
