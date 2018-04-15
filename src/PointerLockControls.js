@@ -11,6 +11,8 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 	var pitchObject = new THREE.Object3D();
 	pitchObject.add( camera );
 
+	var lastTraveledObject;
+
 	var yawObject = new THREE.Object3D();
 	yawObject.position.y = 10;
 	yawObject.add( pitchObject );
@@ -60,6 +62,12 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 			//TODO abstract this out to a handler
 	
 			if(intersectedObject.userData.type === "theme") {
+
+				if(lastTraveledObject !== undefined) {
+					lastTraveledObject.visible = true;
+					lastTraveledObject == undefined;
+				}
+
 				if(!intersectedObject.userData.toggled) {
 					intersectedObject.userData.toggled = true;
 					displayExcerpts(intersectedObject);
@@ -68,6 +76,9 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 				yawObject.position.set(intersectedObject.position.x,
 					intersectedObject.position.y,
 					intersectedObject.position.z);
+
+					lastTraveledObject = intersectedObject;
+					lastTraveledObject.visible = false;
 			}
 	
 			if(intersectedObject.userData.type === "excerpt") {
