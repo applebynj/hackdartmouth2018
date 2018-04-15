@@ -3,7 +3,7 @@ var THREE = require('three');
 var Detector = require('./detector');
 var PointerLockControls = require('./PointerLockControls');
 
-var camera, scene, renderer;
+var camera, scene, renderer, font;
 var geometry, material, mesh;
 var controls,time = Date.now();
 var objects = [];
@@ -14,6 +14,14 @@ var instructions = document.getElementById( 'instructions' );
 
 var mouse = new THREE.Vector2();
 var raycaster = new THREE.Raycaster();
+
+var loader = new THREE.FontLoader();
+
+//TODO: add loading screen
+//Render text ahead and then just show?
+loader.load( 'fonts/helvetiker_regular.typeface.json', function ( newfont ) {
+    font = newfont;
+});
 
 
 // http://www.html5rocks.com/en/tutorials/pointerlock/intro/
@@ -117,7 +125,8 @@ function init() {
     
     var numThemes, radius, angleIncr;
 
-    radius = 100;
+    //TODO: abstract this out
+    radius = 100;  //TODO: generate based on num of theme
     numThemes = 5; //TODO: get from JSON
     slice = 2 * Math.PI / numThemes;
 
@@ -132,6 +141,15 @@ function init() {
         // material.color.setHSV( Math.random() * 0.2 + 0.5, Math.random() * 0.5, 1 );
 
         mesh.userData.type = 'theme'; //TODO: replace with enum / class and such
+        mesh.userData.lines = [
+            "how inspiring this is wow",
+            "amazing I cannot believe",
+            "hello wow amazing",
+            "guap guap get some chicken",
+            "guap guap get some bread",
+            "ayo I been off, laura been croft"
+        ];
+        mesh.userData.toggled = false;
         objects.push( mesh );
     }
 
@@ -169,24 +187,70 @@ function animate() {
     requestAnimationFrame( animate );
 
     // calculate objects intersecting the picking ray
-		var intersects = raycaster.intersectObjects( scene.children );
+    var intersects = raycaster.intersectObjects( scene.children );
 
-		for ( var i = 0; i < intersects.length; i++ ) {
+    for ( var i = 0; i < intersects.length; i++ ) {
 
-			let intersectedObject = intersects[ i ].object;
+        let intersectedObject = intersects[ i ].object;
 
-			//TODO: animate object
-			intersectedObject.material.color.set( 0xff0000 );
-			
-			//TODO: if intersects a theme and then click, jump inside it
-			if(intersectedObject.userData.type === "theme") {
-				controls.getObject().position.set(intersectedObject.position.x,
-					intersectedObject.position.y,
-					intersectedObject.position.z);
-			}
-		}
+        //TODO: animate object
+        intersectedObject.material.color.set( 0xff0000 );
         
+        //TODO: if intersects a theme and then click, jump inside it
+        if(intersectedObject.userData.type === "theme") {
+            if(!intersectedObject.userData.toggled) {
+                intersectedObject.userData.toggled = true;
+                displayExcerpts(intersectedObject);
+            }                
+
+            controls.getObject().position.set(intersectedObject.position.x,
+                intersectedObject.position.y,
+                intersectedObject.position.z);
+        }
+    }
+
+    scene.remove(raycaster);
+
     controls.update( Date.now() - time );
     renderer.render( scene, camera );
     time = Date.now();
 };
+
+
+function displayExcerpts(themeObject) {
+    var numLines = themeObject.userData.lines.length;
+
+    radius = 20; //TODO: generate based on num of lines
+    slice = 2 * Math.PI / numLines;
+
+    for ( i = 0; i < numLines; i++ ) {
+        var geometry;
+
+            geometry = new THREE.TextGeometry( themeObject.userData.lines[i], {
+                font: font,
+                size: 2,
+                height: 1,
+                curveSegments: 12,
+                bevelEnabled: false,
+                //bevelThickness: 10,
+                //bevelSize: 8,
+                //bevelSegments: 5
+            } );
+
+
+            material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
+            var mesh = new THREE.Mesh( geometry, material );
+
+            mesh.position.x = radius * Math.cos(slice*i);
+            mesh.position.y = 25 - (Math.random() * 50);
+            mesh.position.z = radius * Math.sin(slice*i);
+
+            mesh.position.x += themeObject.position.x;
+            mesh.position.y += themeObject.position.y;
+            mesh.position.z += themeObject.position.z;
+
+            mesh.lookAt(themeObject.position);
+
+            scene.add( mesh );
+    };    
+}
