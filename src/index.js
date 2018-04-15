@@ -75,6 +75,7 @@ function init() {
     }
     material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
     mesh = new THREE.Mesh( geometry, material );
+    mesh.userData.type = 'floor'; //TODO: replace with enum / class and such
     scene.add( mesh );
 
 

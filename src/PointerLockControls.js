@@ -90,6 +90,10 @@ var PointerLockControls = function ( camera, mouse, raycaster, scene, font ) {
 				poem.style.display = '';
 				document.exitPointerLock();
 			}
+
+			if(intersectedObject.userData.type === "floor") {
+				yawObject.position.set(0,20,0);
+			}
 		}
 	}
 	
